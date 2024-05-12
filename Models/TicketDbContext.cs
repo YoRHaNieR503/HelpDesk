@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using HelpDesk.Models;
 
 namespace HelpDesk.Models
 {
@@ -10,7 +11,11 @@ namespace HelpDesk.Models
             
         }
 
-        public DbSet<Account> clientes { get; set; }
+        public DbSet<Account> Account { get; set; }
+        public DbSet<Comentarios> Comentarios { get; set; }
+        public DbSet<Role> Role { get; set; }
+        public DbSet<Status> Status { get; set; }
+        public DbSet<Ticket> Ticket { get; set; }
 
     }
 }
