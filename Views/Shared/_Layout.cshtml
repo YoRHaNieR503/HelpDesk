@@ -69,7 +69,7 @@
                             </a>
                         </li>
                         <li class="">
-                            <a class="nav-link" asp-controller="Accounts">
+                            <a class="nav-link" asp-action="index" asp-controller="Accounts">
                                 <i class="far fa-gem"></i>
                                 <span>Usuarios</span>
                             </a>
@@ -81,6 +81,9 @@
                             </a>
                             <div class="sidebar-submenu">
                                 <ul>
+                                    <li>
+                                        <a class="nav-link" asp-action="index" asp-controller="Tickets">Tickets</a>
+                                    </li>
                                     <li>
                                         <a href="#">Asignar Ticket</a>
                                     </li>
