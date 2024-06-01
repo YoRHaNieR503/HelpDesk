@@ -1,0 +1,38 @@
+﻿.login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.login-form {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+    .login-form .form-group {
+        transition: all 0.3s ease-in-out;
+    }-
+
+    .login-form:focus-within .form-group {
+        transform: rotateY(180deg);
+    }
+
+    .login-form input[type="text"],
+    .login-form input[type="password"] {
+        transform: rotateY(180deg);
+        backface-visibility: hidden;
+    }
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
