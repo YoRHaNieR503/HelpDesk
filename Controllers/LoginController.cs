@@ -33,12 +33,12 @@ namespace HelpDesk.Controllers
             if (account != null)
             {
                 var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, account.Username ?? account.Email),
-                    new Claim(ClaimTypes.Role, account.RoleId == 1 ? "Admin" : "User"),
-                    new Claim("FullName", account.FullName ?? ""),
-                    new Claim("FotoUrl", account.FotoUrl ?? "")
-                };
+        {
+            new Claim(ClaimTypes.Name, account.Username ?? account.Email),
+            new Claim(ClaimTypes.Role, account.RoleId == 1 ? "Admin" : account.RoleId == 2 ? "Support" : "User"),
+            new Claim("FullName", account.FullName ?? ""),
+            new Claim("FotoUrl", account.FotoUrl ?? "")
+        };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -53,10 +53,14 @@ namespace HelpDesk.Controllers
                 {
                     return RedirectToAction("Index", "Dashboard");
                 }
+                else if (account.RoleId == 2)
+                {
+                    return RedirectToAction("Index", "Tickets2"); // Redirige a la página de inicio de sesión de soporte
+                }
                 else
                 {
-                    // Redirige a una página diferente si no es admin
-                    return RedirectToAction("Index", "Dashboard"); // Ejemplo de redirección para usuarios no admin
+                    // Redirige a una página diferente si no es admin ni soporte
+                    return RedirectToAction("Index", "Tickets1"); // Ejemplo de redirección para usuarios no admin ni soporte
                 }
             }
 
@@ -65,6 +69,7 @@ namespace HelpDesk.Controllers
             // Si la autenticación falla, se mantiene en la vista actual
             return View("Index");
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Logout()

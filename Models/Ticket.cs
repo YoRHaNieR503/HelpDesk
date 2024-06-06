@@ -1,4 +1,6 @@
-﻿namespace HelpDesk.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace HelpDesk.Models
 {
     public class Ticket
     {

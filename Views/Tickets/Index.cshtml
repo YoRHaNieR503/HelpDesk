@@ -1,4 +1,8 @@
-﻿@model IEnumerable<HelpDesk.Models.Ticket>
+﻿@using HelpDesk.Models;
+@inject TicketDbContext _context
+
+
+@model IEnumerable<HelpDesk.Models.Ticket>
 
 @{
     ViewData["Title"] = "Index";
@@ -25,53 +29,66 @@
                 @Html.DisplayNameFor(model => model.CloseDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StatusId)
+                Status
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
+                User
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SupporterId)
+                Supporter
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AdminId)
+                Admin
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreateDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CloseDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StatusId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SupporterId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AdminId)
-            </td>
-            <td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CloseDate)
+                </td>
+                <td>
+                    @{
+                        var statusName = _context.Status.FirstOrDefault(s => s.Id == item.StatusId)?.name;
+                        @statusName
+                    }
+                </td>
+                <td>
+                    @{
+                        var userName = _context.Account.FirstOrDefault(a => a.Id == item.UserId)?.FullName;
+                        @userName
+                    }
+                </td>
+                <td>
+                    @{
+                        var supporterName = _context.Account.FirstOrDefault(a => a.Id == item.SupporterId)?.FullName;
+                        @supporterName
+                    }
+                </td>
+                <td>
+                    @{
+                        var adminName = _context.Account.FirstOrDefault(a => a.Id == item.AdminId)?.FullName;
+                        @adminName
+                    }
+                </td>
+                <td>
                     <a asp-action="Edit" asp-route-id="@item.id" class="btn btn-primary">Editar</a>
                     <a asp-action="Details" asp-route-id="@item.id" class="btn btn-info">Detalles</a>
                     <a asp-action="Delete" asp-route-id="@item.id" class="btn btn-danger">Eliminar</a>
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

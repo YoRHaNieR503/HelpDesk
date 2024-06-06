@@ -25,7 +25,8 @@ namespace HelpDesk.Controllers
         // GET: Tickets
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Ticket.ToListAsync());
+            var tickets = await _context.Ticket.ToListAsync();
+            return View(tickets);
         }
 
         // GET: Tickets/Details/5

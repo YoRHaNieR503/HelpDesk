@@ -1,4 +1,5 @@
-﻿@model HelpDesk.Models.Account
+﻿@inject HelpDesk.Models.TicketDbContext _context
+@model HelpDesk.Models.Account
 
 @{
     ViewData["Title"] = "Delete";
@@ -6,66 +7,63 @@
 
 <h1>Elimiar</h1>
 
-<h3>Esta seguro que desea eliminar este registro?</h3>
+<h3>¿Está seguro de que desea eliminar este registro?</h3>
 <div>
     <h5>Detalles de la cuenta</h5>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Username)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Username)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Password)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Password)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.FullName)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.FullName)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
+        <dt class="col-sm-2">
+            Rol
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
+        <dd class="col-sm-10">
+            @{
+                var roleName = _context.Role.FirstOrDefault(r => r.Id == Model.RoleId)?.Name;
+                @roleName
+            }
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Email)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RoleId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RoleId)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.FotoUrl)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.FotoUrl)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.AssociateE)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.AssociateE)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Atras
+            <i class="fas fa-arrow-left"></i> Atrás
         </a>
     </form>
 </div>
