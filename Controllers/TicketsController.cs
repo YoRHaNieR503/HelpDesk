@@ -43,8 +43,15 @@ namespace HelpDesk.Controllers
                 return NotFound();
             }
 
+            // Obtener los nombres de las entidades relacionadas
+            ViewData["StatusName"] = _context.Status.FirstOrDefault(s => s.Id == ticket.StatusId)?.name ?? "No definido";
+            ViewData["UserName"] = _context.Account.FirstOrDefault(a => a.Id == ticket.UserId)?.FullName ?? "No definido";
+            ViewData["SupporterName"] = _context.Account.FirstOrDefault(a => a.Id == ticket.SupporterId)?.FullName ?? "No definido";
+            ViewData["AdminName"] = _context.Account.FirstOrDefault(a => a.Id == ticket.AdminId)?.FullName ?? "No definido";
+
             return View(ticket);
         }
+
 
         // GET: Tickets/Create
         public IActionResult Create()
@@ -53,15 +60,28 @@ namespace HelpDesk.Controllers
             {
                 var listaUsers = (from a in _context.Account
                                   where a.RoleId == 3
-                                  select new SelectListItem { Value = a.Id.ToString(), Text = a.Username }).ToList();
+                                  select new SelectListItem { Value = a.Id.ToString(), Text = a.FullName }).ToList();
 
                 ViewData["listUsers"] = listaUsers;
 
                 var listaAdmins = (from a in _context.Account
                                    where a.RoleId == 1
-                                   select new SelectListItem { Value = a.Id.ToString(), Text = a.Username }).ToList();
+                                   select new SelectListItem { Value = a.Id.ToString(), Text = a.FullName }).ToList();
 
                 ViewData["listAdmins"] = listaAdmins;
+
+                // Poblar el combobox para SupporterId
+                var listaSupporters = (from a in _context.Account
+                                       where a.RoleId == 2
+                                       select new SelectListItem { Value = a.Id.ToString(), Text = a.FullName }).ToList();
+
+                ViewData["listSupporters"] = listaSupporters;
+
+                // Poblar el combobox para StatusId
+                var listaStatus = (from s in _context.Status
+                                   select new SelectListItem { Value = s.Id.ToString(), Text = s.name }).ToList();
+
+                ViewData["listStatus"] = listaStatus;
             }
             catch (Exception ex)
             {
@@ -70,6 +90,8 @@ namespace HelpDesk.Controllers
 
             return View();
         }
+
+
 
 
         // POST: Tickets/Create
@@ -178,12 +200,41 @@ namespace HelpDesk.Controllers
                 return NotFound();
             }
 
+            // Obtener las listas necesarias para los dropdowns
+            var statusList = _context.Status.Select(s => new SelectListItem
+            {
+                Value = s.Id.ToString(),
+                Text = s.name
+            }).ToList();
+            ViewBag.listStatus = statusList;
+
+            var userList = _context.Account.Where(a => a.RoleId == 3).Select(u => new SelectListItem
+            {
+                Value = u.Id.ToString(),
+                Text = u.FullName
+            }).ToList();
+            ViewBag.listUsers = userList;
+
+            var supporterList = _context.Account.Where(a => a.RoleId == 2).Select(s => new SelectListItem
+            {
+                Value = s.Id.ToString(),
+                Text = s.FullName
+            }).ToList();
+            ViewBag.listSupporters = supporterList;
+
+            var adminList = _context.Account.Where(a => a.RoleId == 1).Select(ad => new SelectListItem
+            {
+                Value = ad.Id.ToString(),
+                Text = ad.FullName
+            }).ToList();
+            ViewBag.listAdmins = adminList;
+
             return View(ticket);
         }
 
+
+
         // POST: Tickets/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id,Title,Description,CreateDate,CloseDate,StatusId,UserId,SupporterId,AdminId")] Ticket ticket)
@@ -216,6 +267,7 @@ namespace HelpDesk.Controllers
             return View(ticket);
         }
 
+
         // GET: Tickets/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -231,8 +283,15 @@ namespace HelpDesk.Controllers
                 return NotFound();
             }
 
+            // Obtener los nombres de las entidades relacionadas
+            ViewData["StatusName"] = _context.Status.FirstOrDefault(s => s.Id == ticket.StatusId)?.name ?? "No definido";
+            ViewData["UserName"] = _context.Account.FirstOrDefault(a => a.Id == ticket.UserId)?.FullName ?? "No definido";
+            ViewData["SupporterName"] = _context.Account.FirstOrDefault(a => a.Id == ticket.SupporterId)?.FullName ?? "No definido";
+            ViewData["AdminName"] = _context.Account.FirstOrDefault(a => a.Id == ticket.AdminId)?.FullName ?? "No definido";
+
             return View(ticket);
         }
+
 
         // POST: Tickets/Delete/5
         [HttpPost, ActionName("Delete")]

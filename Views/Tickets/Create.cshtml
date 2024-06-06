@@ -12,63 +12,55 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="CreateDate" class="control-label"></label>
                 <input asp-for="CreateDate" class="form-control" />
                 <span asp-validation-for="CreateDate" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="CloseDate" class="control-label"></label>
                 <input asp-for="CloseDate" class="form-control" />
                 <span asp-validation-for="CloseDate" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="StatusId" class="control-label"></label>
-                <input asp-for="StatusId" class="form-control" />
+                <label asp-for="StatusId" class="control-label">Estado</label>
+                <select asp-for="StatusId" class="form-control" asp-items="ViewBag.listStatus"></select>
                 <span asp-validation-for="StatusId" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="UserId" class="control-label">Cliente</label>
-                <select asp-for="UserId" class="form-control">
-                    <option value="">Seleccionar Cliente</option>
-                    @foreach (var admin in (List<SelectListItem>)ViewData["listUsers"])
-                    {
-                        <option value="@admin.Value">@admin.Text</option>
-                    }
-                </select>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.listUsers"></select>
                 <span asp-validation-for="UserId" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="SupporterId" class="control-label"></label>
-                <input asp-for="SupporterId" class="form-control" />
+                <label asp-for="SupporterId" class="control-label">Soporte</label>
+                <select asp-for="SupporterId" class="form-control" asp-items="ViewBag.listSupporters"></select>
                 <span asp-validation-for="SupporterId" class="text-danger"></span>
             </div>
 
-
             <div class="form-group">
                 <label asp-for="AdminId" class="control-label">Administrador</label>
-                <select asp-for="AdminId" class="form-control">
-                    <option value="">Seleccionar Administrador</option>
-                    @foreach (var admin in (List<SelectListItem>)ViewData["listAdmins"])
-                    {
-                        <option value="@admin.Value">@admin.Text</option>
-                    }
-                </select>
+                <select asp-for="AdminId" class="form-control" asp-items="ViewBag.listAdmins"></select>
                 <span asp-validation-for="AdminId" class="text-danger"></span>
             </div>
 
-
-            <!-- Agregamos el campo de Comentario -->
             <div class="form-group">
                 <label for="Comentario" class="control-label">Comentario</label>
                 <textarea id="Comentario" name="Comentario" class="form-control"></textarea>
