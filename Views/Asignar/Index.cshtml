@@ -1,0 +1,35 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Asignar Ticket";
+}
+
+<h2>Asignar Ticket</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@using (Html.BeginForm("Asignar", "Asignar", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.Label("Ticket")
+        @Html.DropDownList("ticketId", new SelectList(ViewBag.Tickets, "id", "Title"), "Seleccione un ticket", new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Admin")
+        @Html.DropDownList("adminId", new SelectList(ViewBag.Admins, "Id", "FullName"), "Seleccione un admin", new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Soporte")
+        @Html.DropDownList("soporteId", new SelectList(ViewBag.Soportes, "Id", "FullName"), "Seleccione un soporte", new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Asignar</button>
+}
+ 

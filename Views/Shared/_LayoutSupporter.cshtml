@@ -1,4 +1,9 @@
-﻿@using Microsoft.AspNetCore.Authentication
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Authentication.Cookies
 @using System.Security.Claims
 
@@ -55,18 +60,7 @@
                         <li class="header-menu">
                             <span>General</span>
                         </li>
-                        <li class="">
-                            <a class ="nav-link" asp-action="Index" asp-controller="Dashboard">
-                                <i class="fa fa-tachometer-alt"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a class="nav-link" asp-action="Index" asp-controller="Accounts">
-                                <i class="far fa-gem"></i>
-                                <span>Usuarios</span>
-                            </a>
-                        </li>
+
                         <li class="sidebar-dropdown">
                             <a href="#">
                                 <i class="fa fa-chart-line"></i>
@@ -75,14 +69,15 @@
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li>
-                                        <a class="nav-link" asp-action="Index" asp-controller="Tickets">Tickets</a>
+                                        <a class="nav-link" asp-action="Index" asp-controller="Tickets2">Tickets</a>
                                     </li>
                                     <li>
-                                        <a class="nav-link" asp-action="Index" asp-controller="Asignar">Asignar Ticket</a>
+                                        <a class="nav-link" asp-action="Index" asp-controller="AsignarSupporter">Asignar Ticket</a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
+
                     </ul>
                 </div>
                 <!-- sidebar-menu  -->
