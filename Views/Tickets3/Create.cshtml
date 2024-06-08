@@ -1,0 +1,128 @@
+﻿@model HelpDesk.Models.Ticket
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Ticket</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" id="ticketForm">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreateDate" class="control-label"></label>
+                <input asp-for="CreateDate" class="form-control" />
+                <span asp-validation-for="CreateDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CloseDate" class="control-label"></label>
+                <input asp-for="CloseDate" class="form-control" />
+                <span asp-validation-for="CloseDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StatusId" class="control-label"></label>
+                <select asp-for="StatusId" class="form-control">
+                    <option value="">Seleccione un estado</option>
+                    @if (ViewBag.StatusList != null)
+                    {
+                        foreach (var status in ViewBag.StatusList)
+                        {
+                            <option value="@status.Id">@status.name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="StatusId" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class="form-control">
+                    <option value="">Seleccione un usuario</option>
+                    @foreach (var user in ViewBag.UserList)
+                    {
+                        <option value="@user.Id">@user.Username</option>
+                    }
+                </select>
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="SupporterId" class="control-label"></label>
+                <select asp-for="SupporterId" class="form-control">
+                    <option value="">Seleccione un soporte</option>
+                    @foreach (var supporter in ViewBag.SupporterList)
+                    {
+                        <option value="@supporter.Id">@supporter.Username</option>
+                    }
+                </select>
+                <span asp-validation-for="SupporterId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AdminId" class="control-label"></label>
+                <select asp-for="AdminId" class="form-control">
+                    <option value="">Seleccione un administrador</option>
+                    @foreach (var admin in ViewBag.AdminList)
+                    {
+                        <option value="@admin.Id">@admin.Username</option>
+                    }
+                </select>
+                <span asp-validation-for="AdminId" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label for="Comentario" class="control-label">Comentario</label>
+                <textarea id="Comentario" name="Comentario" class="form-control"></textarea>
+                @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                {
+                    <div class="text-danger">@ViewBag.ErrorMessage</div>
+                }
+
+
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var form = document.getElementById('ticketForm');
+            form.addEventListener('submit', function (event) {
+                var comentario = document.getElementById('Comentario').value.trim();
+                if (comentario === '') {
+                    event.preventDefault(); // Evitar que el formulario se envíe
+                    alert('Por favor, escriba un comentario antes de enviar el formulario.');
+                }
+            });
+        });
+    </script>
+}

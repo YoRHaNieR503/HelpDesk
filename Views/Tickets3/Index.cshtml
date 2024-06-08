@@ -1,0 +1,94 @@
+﻿@using HelpDesk.Models;
+@inject TicketDbContext _context
+
+
+@model IEnumerable<HelpDesk.Models.Ticket>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Tickets</h1>
+
+<p>
+    <a class="btn btn-dark" asp-action="Create">Nuevo Ticket</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CloseDate)
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                User
+            </th>
+            <th>
+                Supporter
+            </th>
+            <th>
+                Admin
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CloseDate)
+                </td>
+                <td>
+                    @{
+                        var statusName = _context.Status.FirstOrDefault(s => s.Id == item.StatusId)?.name;
+                        @statusName
+                    }
+                </td>
+                <td>
+                    @{
+                        var userName = _context.Account.FirstOrDefault(a => a.Id == item.UserId)?.FullName;
+                        @userName
+                    }
+                </td>
+                <td>
+                    @{
+                        var supporterName = _context.Account.FirstOrDefault(a => a.Id == item.SupporterId)?.FullName;
+                        @supporterName
+                    }
+                </td>
+                <td>
+                    @{
+                        var adminName = _context.Account.FirstOrDefault(a => a.Id == item.AdminId)?.FullName;
+                        @adminName
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.id" class="btn btn-primary">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.id" class="btn btn-info">Detalles</a>
+                    <a asp-action="Delete" asp-route-id="@item.id" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 using System.Configuration;
 using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HelpDesk.Controllers
 {

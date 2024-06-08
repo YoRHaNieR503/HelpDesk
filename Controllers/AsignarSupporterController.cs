@@ -53,8 +53,15 @@ namespace HelpDesk.Controllers
 
             TempData["SuccessMessage"] = "El ticket ha sido asignado con éxito.";
 
-            return RedirectToAction(nameof(Index));
+            // Cargar nuevamente los datos necesarios para la vista
+            ViewBag.Tickets = _context.Ticket.Where(t => t.StatusId == 1).ToList();
+            ViewBag.Admins = _context.Account.Where(a => a.RoleId == 1).ToList();
+            ViewBag.Soportes = _context.Account.Where(a => a.RoleId == 2).ToList();
+
+            // Retorna la vista actualizada
+            return View("Index");
         }
+
 
         private async Task EnviarCorreoAsignacion(Ticket ticket)
         {
